@@ -46,6 +46,7 @@ export class AuthService {
       otpData = {
         retriesSendOtp: 1,
         otp: loginOtp,
+        isVerify: false,
       };
     } else {
       otpData.otp = loginOtp;
@@ -89,5 +90,35 @@ export class AuthService {
         },
       );
     }
+  }
+
+  async checkOtpExist({ input }): Promise<void> {
+    const otpData = await this.cacheService.get(`${REDIS_LOGIN_KEY}${input}`);
+
+    if (!otpData) {
+      throw new BadRequestException(
+        errorMessages.CLIENT.AUTH.LOGIN.INPUT_WRONG,
+      );
+    }
+  }
+
+  async checkOtpVerify({ input, otp }): Promise<void> {
+    const otpData = (await this.cacheService.get(
+      `${REDIS_LOGIN_KEY}${input}`,
+    )) as IOtpData;
+
+    if (otpData?.isVerify === true) {
+      throw new BadRequestException(
+        errorMessages.CLIENT.AUTH.LOGIN.INPUT_WRONG,
+      );
+    }
+
+    if (otpData?.otp?.toString() !== otp) {
+      throw new BadRequestException(errorMessages.CLIENT.AUTH.LOGIN.OTP_WRONG);
+    }
+  }
+
+  async verifyLogin({ input }): Promise<void> {
+    await this.cacheService.del(`${REDIS_LOGIN_KEY}${input}`);
   }
 }

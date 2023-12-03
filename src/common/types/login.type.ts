@@ -7,3 +7,10 @@ export class LoginAuthDto {
   @IsString()
   input: string;
 }
+
+export class VerifyLoginAuthDto extends LoginAuthDto {
+  @ApiProperty({ example: '7777' })
+  @IsNotEmpty()
+  @IsString()
+  otp: string;
+}

@@ -21,11 +21,37 @@ model User {
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
+  id        Int                 @id @default(autoincrement())
   parentId  Int?
   title     String
   slug      String
   content   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+  products  ProductCategories[]
+}
+
+model Product {
+  id          Int                 @id @default(autoincrement())
+  title       String
+  description String?
+  slug        String
+  price       Float
+  discount    Float
+  quantity    Int
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  deletedAt   DateTime?
+  categories  ProductCategories[]
+}
+
+model ProductCategories {
+  id         Int       @id @default(autoincrement())
+  product    Product   @relation(fields: [productId], references: [id])
+  productId  Int
+  category   Category  @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
 }

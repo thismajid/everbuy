@@ -43,6 +43,7 @@ model Product {
   updatedAt   DateTime            @updatedAt
   deletedAt   DateTime?
   categories  ProductCategories[]
+  ProductTags ProductTags[]
 }
 
 model ProductCategories {
@@ -54,4 +55,26 @@ model ProductCategories {
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
   deletedAt  DateTime?
+}
+
+model Tag {
+  id          Int           @id @default(autoincrement())
+  title       String
+  slug        String
+  content     String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+  ProductTags ProductTags[]
+}
+
+model ProductTags {
+  id        Int       @id @default(autoincrement())
+  product   Product   @relation(fields: [productId], references: [id])
+  productId Int
+  tag       Tag       @relation(fields: [tagId], references: [id])
+  tagId     Int
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
 }

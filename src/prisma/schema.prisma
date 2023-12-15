@@ -44,6 +44,7 @@ model Product {
   deletedAt   DateTime?
   categories  ProductCategories[]
   ProductTags ProductTags[]
+  Comment     Comment[]
 }
 
 model ProductCategories {
@@ -77,4 +78,26 @@ model ProductTags {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?
+}
+
+enum CommentStatus {
+  PENDING
+  ACCEPT
+  DECLINE
+}
+
+model Comment {
+  id        Int           @id @default(autoincrement())
+  title     String
+  content   String?
+  rating    Int
+  status    CommentStatus
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  deletedAt DateTime?
+  product   Product       @relation(fields: [productId], references: [id])
+  productId Int
+  parentId  Int?
+  parent    Comment?      @relation("ChildComments", fields: [parentId], references: [id])
+  children  Comment[]     @relation("ChildComments")
 }

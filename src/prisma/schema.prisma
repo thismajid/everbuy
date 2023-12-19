@@ -11,14 +11,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstName String?
-  lastName  String?
-  email     String?
-  mobile    String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Order     Order[]
+  id          Int           @id @default(autoincrement())
+  firstName   String?
+  lastName    String?
+  email       String?
+  mobile      String        @unique
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Order       Order[]
+  Transaction Transaction[]
 }
 
 model Category {
@@ -128,4 +129,25 @@ model Order {
   deletedAt DateTime
   user      User        @relation(fields: [userId], references: [id])
   userId    Int
+}
+
+enum TransactionStatus {
+  PENDING
+  PAID
+  FAIELD
+}
+
+model Transaction {
+  id         Int               @id @default(autoincrement())
+  content    String?
+  amount     Float
+  gateway    String
+  authority  String
+  cardNumber String
+  status     TransactionStatus
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  deletedAt  DateTime
+  user       User              @relation(fields: [userId], references: [id])
+  userId     Int
 }

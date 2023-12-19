@@ -1,7 +1,11 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Category } from '@prisma/client';
-import { ApiGetAllCategories, ApiGetCategoryById } from './decorators';
+import {
+  ApiCreateCategory,
+  ApiGetAllCategories,
+  ApiGetCategoryById,
+} from './decorators';
 import { CategoryService } from 'src/common/services';
 import { GetAllCategoriesDto } from './dto';
 
@@ -20,5 +24,11 @@ export class CategoryController {
   @ApiGetCategoryById()
   async findOne(@Param('id') id: string): Promise<Category | null> {
     return this.categoryService.findOne(+id);
+  }
+
+  @Post()
+  @ApiCreateCategory()
+  async create(@Body() data: Category): Promise<Category> {
+    return this.categoryService.create({ ...data });
   }
 }

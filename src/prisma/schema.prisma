@@ -110,25 +110,26 @@ enum OrderStatus {
 }
 
 model Order {
-  id        Int         @id @default(autoincrement())
-  total     Float
-  discount  Float
-  content   String?
-  status    OrderStatus
-  firstName String
-  lastName  String
-  mobile    String
-  email     String
-  line1     String
-  line2     String
-  city      String
-  province  String
-  country   String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  deletedAt DateTime
-  user      User        @relation(fields: [userId], references: [id])
-  userId    Int
+  id          Int           @id @default(autoincrement())
+  total       Float
+  discount    Float
+  content     String?
+  status      OrderStatus
+  firstName   String
+  lastName    String
+  mobile      String
+  email       String
+  line1       String
+  line2       String
+  city        String
+  province    String
+  country     String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime
+  user        User          @relation(fields: [userId], references: [id])
+  userId      Int
+  Transaction Transaction[]
 }
 
 enum TransactionStatus {
@@ -150,4 +151,6 @@ model Transaction {
   deletedAt  DateTime
   user       User              @relation(fields: [userId], references: [id])
   userId     Int
+  order      Order             @relation(fields: [orderId], references: [id])
+  orderId    Int
 }

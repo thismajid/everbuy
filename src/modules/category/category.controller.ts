@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Put,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Category } from '@prisma/client';
 import {
@@ -30,5 +39,13 @@ export class CategoryController {
   @ApiCreateCategory()
   async create(@Body() data: Category): Promise<Category> {
     return this.categoryService.create({ ...data });
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() category: Category,
+  ): Promise<Category | null> {
+    return this.categoryService.update({ id, category });
   }
 }

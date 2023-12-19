@@ -31,4 +31,21 @@ export class CategoryService {
       },
     });
   }
+
+  async update({
+    id,
+    category,
+  }: {
+    id: number;
+    category: Category;
+  }): Promise<Category | null> {
+    return await this.prisma.category.update({
+      where: {
+        id,
+      },
+      data: {
+        ...category,
+      },
+    });
+  }
 }

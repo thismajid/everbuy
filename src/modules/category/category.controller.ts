@@ -1,7 +1,7 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Category } from '@prisma/client';
-import { ApiGetAllCategories } from './decorators';
+import { ApiGetAllCategories, ApiGetCategoryById } from './decorators';
 import { CategoryService } from 'src/common/services';
 import { GetAllCategoriesDto } from './dto';
 
@@ -14,5 +14,11 @@ export class CategoryController {
   @ApiGetAllCategories()
   async findAll(@Query() query: GetAllCategoriesDto): Promise<Category[]> {
     return this.categoryService.findAll({ ...query });
+  }
+
+  @Get(':id')
+  @ApiGetCategoryById()
+  async findOne(@Param('id') id: string): Promise<Category | null> {
+    return this.categoryService.findOne(+id);
   }
 }

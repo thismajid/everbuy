@@ -16,4 +16,8 @@ export class CategoryService {
       take: limit,
     });
   }
+
+  async findOne(id: number): Promise<Category | null> {
+    return this.prisma.category.findUnique({ where: { id } });
+  }
 }

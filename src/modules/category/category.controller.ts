@@ -7,6 +7,7 @@ import {
   Query,
   Put,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Category } from '@prisma/client';
@@ -14,6 +15,7 @@ import {
   ApiCreateCategory,
   ApiGetAllCategories,
   ApiGetCategoryById,
+  ApiUpdateCategory,
 } from './decorators';
 import { CategoryService } from 'src/common/services';
 import { GetAllCategoriesDto } from './dto';
@@ -42,10 +44,18 @@ export class CategoryController {
   }
 
   @Put(':id')
+  @ApiUpdateCategory()
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() category: Category,
   ): Promise<Category | null> {
     return this.categoryService.update({ id, category });
+  }
+
+  @Delete(':id')
+  async delete(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Category | null> {
+    return this.categoryService.delete({ id });
   }
 }

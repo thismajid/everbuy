@@ -20,6 +20,7 @@ model User {
   updatedAt   DateTime      @updatedAt
   Order       Order[]
   Transaction Transaction[]
+  Cart        Cart[]
 }
 
 model Category {
@@ -153,4 +154,23 @@ model Transaction {
   userId     Int
   order      Order             @relation(fields: [orderId], references: [id])
   orderId    Int
+}
+
+model Cart {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  mobile    String
+  email     String
+  line1     String
+  line2     String
+  city      String
+  province  String
+  country   String
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
 }

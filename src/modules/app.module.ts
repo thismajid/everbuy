@@ -6,10 +6,14 @@ import { AppService } from './app.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthModule } from './auth/auth.module';
 import { REDIS_HOST, REDIS_PORT } from 'src/config/global.config';
+import { CategoryController } from './category/category.controller';
+import { CategoryModule } from './category/category.module';
+import { CategoryService } from 'src/common/services';
 
 @Module({
   imports: [
     AuthModule,
+    CategoryModule,
     CacheModule.register({
       host: REDIS_HOST,
       store: redisStore,
@@ -17,7 +21,7 @@ import { REDIS_HOST, REDIS_PORT } from 'src/config/global.config';
       isGlobal: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, PrismaService],
+  controllers: [CategoryController, AppController],
+  providers: [AppService, PrismaService, CategoryService],
 })
 export class AppModule {}

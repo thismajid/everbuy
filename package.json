@@ -30,6 +30,7 @@
     "cache-manager": "^5.3.1",
     "cache-manager-redis-store": "^2.0.0",
     "cache-manager-redis-yet": "^4.1.2",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "dotenv": "^16.3.1",
     "ircheck": "^0.3.6",

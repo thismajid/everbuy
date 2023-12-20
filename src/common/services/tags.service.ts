@@ -38,4 +38,15 @@ export class TagsService {
       },
     });
   }
+
+  async update({ id, tag }: { id: number; tag: Tag }): Promise<Tag | null> {
+    return await this.prisma.tag.update({
+      where: {
+        id,
+      },
+      data: {
+        ...tag,
+      },
+    });
+  }
 }

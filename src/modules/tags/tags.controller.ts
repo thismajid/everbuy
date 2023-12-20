@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Post,
+  Body,
+  Put,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { DocsPagination } from 'src/common/interfaces/docs-pagination.interface';
 import { TagsService } from 'src/common/services';
 import { GetAllTagsDto } from './dto/get-all-tags.dto';
@@ -21,5 +30,13 @@ export class TagsController {
   @Post('/')
   async create(@Body() data: Tag): Promise<Tag> {
     return this.tagsService.create({ ...data });
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() tag: Tag,
+  ): Promise<Tag | null> {
+    return this.tagsService.update({ id, tag });
   }
 }

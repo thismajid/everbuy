@@ -13,6 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { Category } from '@prisma/client';
 import {
   ApiCreateCategory,
+  ApiDeleteCategory,
   ApiGetAllCategories,
   ApiGetCategoryById,
   ApiUpdateCategory,
@@ -53,6 +54,7 @@ export class CategoryController {
   }
 
   @Delete(':id')
+  @ApiDeleteCategory()
   async delete(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<Category | null> {

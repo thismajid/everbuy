@@ -3,6 +3,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { IPaginationParams } from '../interfaces';
 import { DocsPagination } from '../interfaces/docs-pagination.interface';
 import { pagination } from '../utils';
+import { Tag } from '@prisma/client';
 
 @Injectable()
 export class TagsService {
@@ -21,5 +22,9 @@ export class TagsService {
     ]);
 
     return pagination(result, total, page, limit);
+  }
+
+  async findOne(id: number): Promise<Tag | null> {
+    return this.prisma.tag.findUnique({ where: { id } });
   }
 }

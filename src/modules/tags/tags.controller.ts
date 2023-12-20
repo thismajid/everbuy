@@ -7,6 +7,7 @@ import {
   Body,
   Put,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { DocsPagination } from 'src/common/interfaces/docs-pagination.interface';
 import { TagsService } from 'src/common/services';
@@ -38,5 +39,10 @@ export class TagsController {
     @Body() tag: Tag,
   ): Promise<Tag | null> {
     return this.tagsService.update({ id, tag });
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<Tag | null> {
+    return this.tagsService.delete({ id });
   }
 }

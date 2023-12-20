@@ -49,4 +49,12 @@ export class TagsService {
       },
     });
   }
+
+  async delete({ id }: { id: number }): Promise<Tag | null> {
+    return this.prisma.tag.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

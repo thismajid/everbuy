@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   ParseIntPipe,
+  Delete,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductsService } from 'src/common/services/products.service';
@@ -40,5 +41,10 @@ export class ProductsController {
     @Body() product: Product,
   ): Promise<Product | null> {
     return this.productsService.update({ id, product });
+  }
+
+  @Delete(':id')
+  async delete(@Param('id', ParseIntPipe) id: number): Promise<Product | null> {
+    return this.productsService.delete({ id });
   }
 }

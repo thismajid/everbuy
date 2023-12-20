@@ -10,6 +10,7 @@ import { CategoryController } from './category/category.controller';
 import { CategoryModule } from './category/category.module';
 import { CategoryService } from 'src/common/services';
 import { TagsModule } from './tags/tags.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TagsModule } from './tags/tags.module';
       isGlobal: true,
     }),
     TagsModule,
+    ProductsModule,
   ],
   controllers: [CategoryController, AppController],
   providers: [AppService, PrismaService, CategoryService],

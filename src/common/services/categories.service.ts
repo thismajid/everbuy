@@ -3,6 +3,8 @@ import { Category } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { IPaginationParams } from '../interfaces';
 import * as slugify from 'arslugify';
+import { pagination } from '../utils';
+import { DocsPagination } from '../interfaces/docs-pagination.interface';
 
 @Injectable()
 export class CategoryService {
@@ -11,11 +13,16 @@ export class CategoryService {
   async findAll({
     page = 1,
     limit = 10,
-  }: IPaginationParams): Promise<Category[]> {
-    return await this.prisma.category.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
+  }: IPaginationParams): Promise<DocsPagination> {
+    const [result, total] = await Promise.all([
+      this.prisma.category.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.prisma.category.count({}),
+    ]);
+
+    return pagination(result, total, page, limit);
   }
 
   async findOne(id: number): Promise<Category | null> {

@@ -20,7 +20,9 @@ import {
   ApiGetTagById,
   ApiUpdateTag,
 } from './decorators';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Tags')
 @Controller('tags')
 export class TagsController {
   constructor(private tagsService: TagsService) {}

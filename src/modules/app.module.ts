@@ -9,6 +9,7 @@ import { REDIS_HOST, REDIS_PORT } from 'src/config/global.config';
 import { CategoryController } from './category/category.controller';
 import { CategoryModule } from './category/category.module';
 import { CategoryService } from 'src/common/services';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CategoryService } from 'src/common/services';
       port: REDIS_PORT,
       isGlobal: true,
     }),
+    TagsModule,
   ],
   controllers: [CategoryController, AppController],
   providers: [AppService, PrismaService, CategoryService],

@@ -47,4 +47,21 @@ export class ProductsService {
       },
     });
   }
+
+  async update({
+    id,
+    product,
+  }: {
+    id: number;
+    product: Product;
+  }): Promise<Product | null> {
+    return await this.prisma.product.update({
+      where: {
+        id,
+      },
+      data: {
+        ...product,
+      },
+    });
+  }
 }

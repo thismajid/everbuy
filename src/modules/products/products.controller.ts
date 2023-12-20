@@ -1,4 +1,13 @@
-import { Controller, Get, Query, Param, Body, Post } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  Param,
+  Body,
+  Post,
+  Put,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ProductsService } from 'src/common/services/products.service';
 import { GetAllProductsDto } from './dto/get-all-products.dto';
@@ -23,5 +32,13 @@ export class ProductsController {
   @Post()
   async create(@Body() data: Product): Promise<Product> {
     return this.productsService.create({ ...data });
+  }
+
+  @Put(':id')
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() product: Product,
+  ): Promise<Product | null> {
+    return this.productsService.update({ id, product });
   }
 }

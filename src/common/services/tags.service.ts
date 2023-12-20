@@ -4,6 +4,7 @@ import { IPaginationParams } from '../interfaces';
 import { DocsPagination } from '../interfaces/docs-pagination.interface';
 import { pagination } from '../utils';
 import { Tag } from '@prisma/client';
+import * as slugify from 'arslugify';
 
 @Injectable()
 export class TagsService {
@@ -26,5 +27,15 @@ export class TagsService {
 
   async findOne(id: number): Promise<Tag | null> {
     return this.prisma.tag.findUnique({ where: { id } });
+  }
+
+  async create({ title, content }: Tag): Promise<Tag> {
+    return this.prisma.tag.create({
+      data: {
+        title,
+        content,
+        slug: slugify(title),
+      },
+    });
   }
 }

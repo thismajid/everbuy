@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, Body } from '@nestjs/common';
 import { DocsPagination } from 'src/common/interfaces/docs-pagination.interface';
 import { TagsService } from 'src/common/services';
 import { GetAllTagsDto } from './dto/get-all-tags.dto';
@@ -16,5 +16,10 @@ export class TagsController {
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<Tag | null> {
     return this.tagsService.findOne(+id);
+  }
+
+  @Post('/')
+  async create(@Body() data: Tag): Promise<Tag> {
+    return this.tagsService.create({ ...data });
   }
 }

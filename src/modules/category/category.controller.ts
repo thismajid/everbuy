@@ -20,6 +20,7 @@ import {
 } from './decorators';
 import { CategoryService } from 'src/common/services';
 import { GetAllCategoriesDto } from './dto';
+import { DocsPagination } from 'src/common/interfaces/docs-pagination.interface';
 
 @ApiTags('Categories')
 @Controller('categories')
@@ -28,7 +29,7 @@ export class CategoryController {
 
   @Get('/')
   @ApiGetAllCategories()
-  async findAll(@Query() query: GetAllCategoriesDto): Promise<Category[]> {
+  async findAll(@Query() query: GetAllCategoriesDto): Promise<DocsPagination> {
     return this.categoryService.findAll({ ...query });
   }
 

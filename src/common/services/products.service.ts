@@ -5,6 +5,7 @@ import { DocsPagination } from '../interfaces/docs-pagination.interface';
 import { pagination } from '../utils';
 import { Product } from '@prisma/client';
 import * as slugify from 'arslugify';
+import { CreateProductDto } from '../types/create-product.type';
 
 @Injectable()
 export class ProductsService {
@@ -35,15 +36,33 @@ export class ProductsService {
     price,
     discount,
     quantity,
-  }: Product): Promise<Product> {
-    return this.prisma.product.create({
+    categoryIds,
+  }: CreateProductDto): Promise<Product> {
+    return await this.prisma.product.create({
       data: {
         title,
         description,
+        slug: slugify(title),
         price,
         discount,
         quantity,
-        slug: slugify(title),
+        categories:
+          categoryIds.length > 0
+            ? {
+                create: categoryIds.map((categoryId) => ({
+                  category: {
+                    connect: { id: categoryId },
+                  },
+                })),
+              }
+            : {},
+      },
+      include: {
+        categories: {
+          include: {
+            category: true,
+          },
+        },
       },
     });
   }

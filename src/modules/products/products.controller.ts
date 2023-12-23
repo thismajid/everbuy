@@ -21,6 +21,7 @@ import {
   ApiGetProductById,
   ApiUpdateProduct,
 } from './decorators';
+import { CreateProductDto } from 'src/common/types/create-product.type';
 
 @ApiTags('Products')
 @Controller('products')
@@ -41,7 +42,7 @@ export class ProductsController {
 
   @Post()
   @ApiCreateProduct()
-  async create(@Body() data: Product): Promise<Product> {
+  async create(@Body() data: CreateProductDto): Promise<Product> {
     return this.productsService.create({ ...data });
   }
 

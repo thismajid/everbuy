@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { CategoryService } from 'src/common/services';
 import { TagsModule } from './tags/tags.module';
 import { ProductsModule } from './products/products.module';
+import { CommentsModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ProductsModule } from './products/products.module';
     }),
     TagsModule,
     ProductsModule,
+    CommentsModule,
   ],
   controllers: [CategoryController, AppController],
   providers: [AppService, PrismaService, CategoryService],

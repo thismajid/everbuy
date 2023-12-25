@@ -13,10 +13,14 @@ import {
 } from 'src/config/global.config';
 import { errorMessages } from 'src/config/errorMessages.config';
 import { IOtpData } from '../interfaces';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(@Inject(CACHE_MANAGER) private cacheService: Cache) {}
+  constructor(
+    @Inject(CACHE_MANAGER) private cacheService: Cache,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async checkRetriesSendOtp({ input }): Promise<void> {
     const otpData: IOtpData = await this.cacheService.get(
@@ -120,5 +124,12 @@ export class AuthService {
 
   async verifyLogin({ input }): Promise<void> {
     await this.cacheService.del(`${REDIS_LOGIN_KEY}${input}`);
+  }
+
+  async createAuthToken({ userId }) {
+    const payload = { userId };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
   }
 }

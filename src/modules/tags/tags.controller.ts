@@ -35,8 +35,8 @@ export class TagsController {
 
   @Get(':id')
   @ApiGetTagById()
-  async findOne(@Param('id') id: string): Promise<Tag | null> {
-    return this.tagsService.findOne(+id);
+  async findOne(@Param('id', ParseIntPipe) id: number): Promise<Tag | null> {
+    return this.tagsService.findOne(id);
   }
 
   @Post('/')

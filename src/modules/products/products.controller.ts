@@ -36,8 +36,10 @@ export class ProductsController {
 
   @Get(':id')
   @ApiGetProductById()
-  async findOne(@Param('id') id: string): Promise<Product | null> {
-    return this.productsService.findOne(+id);
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Product | null> {
+    return this.productsService.findOne(id);
   }
 
   @Post()

@@ -35,7 +35,9 @@ export class CategoryController {
 
   @Get(':id')
   @ApiGetCategoryById()
-  async findOne(@Param('id') id: string): Promise<Category | null> {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<Category | null> {
     return this.categoryService.findOne(+id);
   }
 

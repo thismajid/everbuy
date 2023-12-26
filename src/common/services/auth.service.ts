@@ -14,6 +14,8 @@ import {
 import { errorMessages } from 'src/config/errorMessages.config';
 import { IOtpData } from '../interfaces';
 import { JwtService } from '@nestjs/jwt';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class AuthService {
@@ -127,9 +129,16 @@ export class AuthService {
   }
 
   async createAuthToken({ userId }) {
-    const payload = { userId };
+    const payload = { sub: userId };
     return {
-      accessToken: this.jwtService.sign(payload),
+      accessToken: this.jwtService.sign(
+        { userId },
+        { secret: process.env.JWT_SECRET },
+      ),
     };
+  }
+
+  validate(payload) {
+    return { userId: payload.sub };
   }
 }

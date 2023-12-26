@@ -9,6 +9,8 @@ export const {
   SMS_TEMPLATE,
   REDIS_HOST,
   REDIS_PORT,
+  JWT_SECRET,
+  JWT_ACCESS_EXPIRATION_MINUTES,
 } = process.env;
 
 export const LOGIN_RETRIES_ALLOWED = Number(process.env.LOGIN_RETRIES_ALLOWED);

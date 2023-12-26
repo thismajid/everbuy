@@ -13,7 +13,7 @@ export class UsersService {
   }
 
   async findByMobile({ mobile }: { mobile: string }): Promise<User | null> {
-    return this.prisma.user.findUnique({
+    return await this.prisma.user.findUnique({
       where: {
         mobile,
       },
@@ -26,12 +26,20 @@ export class UsersService {
     email = null,
     mobile,
   }: INewUser): Promise<User> {
-    return this.prisma.user.create({
+    return await this.prisma.user.create({
       data: {
         firstName,
         lastName,
         email,
         mobile,
+      },
+    });
+  }
+
+  async getById({ userId }: { userId: number }): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: {
+        id: userId,
       },
     });
   }

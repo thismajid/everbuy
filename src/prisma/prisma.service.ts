@@ -8,4 +8,9 @@ export class PrismaService extends PrismaClient implements OnModuleInit {
     await this.$connect();
     logger.debug(`Database connected successfully ... 🔥`);
   }
+
+  async onModuleDestroy() {
+    await this.$disconnect();
+    logger.debug(`Database disconnected ...`);
+  }
 }

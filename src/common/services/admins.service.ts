@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as argon2 from 'argon2';
+import { AdminRoles } from '@prisma/client';
 
 @Injectable()
 export class AdminsService {
@@ -32,7 +33,7 @@ export class AdminsService {
         mobile,
         username,
         password: hashedPassword,
-        role: 'SUPERADMIN',
+        role: AdminRoles.SUPERADMIN,
       },
     });
   }

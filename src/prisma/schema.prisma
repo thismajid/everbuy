@@ -191,3 +191,20 @@ model CartItem {
   product   Product  @relation(fields: [productId], references: [id])
   productId Int
 }
+
+enum AdminRoles {
+  SUPERADMIN
+}
+
+model Admin {
+  id        Int        @id @default(autoincrement())
+  firstName String?
+  lastName  String?
+  email     String     @unique
+  mobile    String     @unique
+  username  String     @unique
+  password  String
+  role      AdminRoles
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}

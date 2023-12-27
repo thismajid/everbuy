@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as argon2 from 'argon2';
-import { AdminRoles } from '@prisma/client';
+import { AdminRoles } from '../enums';
 
 @Injectable()
 export class AdminsService {
@@ -23,7 +23,7 @@ export class AdminsService {
     password: string;
   }): Promise<void> {
     const hashedPassword = await argon2.hash(password);
-    await this.prisma.admin.upsert({
+    await this.prisma.admins.upsert({
       where: { email },
       update: {},
       create: {

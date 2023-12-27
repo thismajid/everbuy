@@ -196,7 +196,7 @@ enum AdminRoles {
   SUPERADMIN
 }
 
-model Admin {
+model Admins {
   id        Int        @id @default(autoincrement())
   firstName String?
   lastName  String?

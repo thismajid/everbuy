@@ -9,6 +9,7 @@ import { ResponseInterceptor } from './common/interceptors';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableShutdownHooks();
+  app.setGlobalPrefix('v1');
   SwaggerConfig(app);
   app.useGlobalInterceptors(new ResponseInterceptor());
   await app.listen(APP_PORT, () => {

@@ -7,5 +7,9 @@ export const errorMessages = {
         OTP_WRONG: 'این کد احراز اشتباه است',
       },
     },
+    PRODUCT: {
+      NOT_EXIST: 'محصول انتخابی موجود نمی باشد',
+      QUANTITY_MORE: 'موجودی محصول انتخابی کمتر از مقدار درخواست شده است',
+    },
   },
 };

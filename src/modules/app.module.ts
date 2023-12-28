@@ -20,6 +20,7 @@ import { TagsModule } from './tags/tags.module';
 import { ProductsModule } from './products/products.module';
 import { CommentsModule } from './comments/comments.module';
 import { AdminsService } from 'src/common/services/admins.service';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { AdminsService } from 'src/common/services/admins.service';
     TagsModule,
     ProductsModule,
     CommentsModule,
+    CartModule,
   ],
   controllers: [CategoryController, AppController],
   providers: [AppService, PrismaService, CategoryService, AdminsService],

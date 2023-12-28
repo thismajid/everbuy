@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { IPaginationParams } from '../interfaces';
 import { DocsPagination } from '../interfaces/docs-pagination.interface';
@@ -6,6 +10,7 @@ import { pagination } from '../utils';
 import { Product } from '@prisma/client';
 import * as slugify from 'arslugify';
 import { CreateProductDto } from '../types/create-product.type';
+import { errorMessages } from 'src/config';
 
 @Injectable()
 export class ProductsService {
@@ -90,5 +95,25 @@ export class ProductsService {
         id,
       },
     });
+  }
+
+  async isProductExist({ id }: { id: number }): Promise<void> {
+    const productExist = await this.findOne(id);
+    if (!productExist) {
+      throw new NotFoundException(errorMessages.CLIENT.PRODUCT.NOT_EXIST);
+    }
+  }
+
+  async checkProductQuantity({
+    id,
+    quantity,
+  }: {
+    id: number;
+    quantity: number;
+  }): Promise<void> {
+    const product = await this.findOne(id);
+    if (!product || product.quantity < quantity) {
+      throw new BadRequestException(errorMessages.CLIENT.PRODUCT.QUANTITY_MORE);
+    }
   }
 }

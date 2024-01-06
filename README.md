@@ -44,7 +44,7 @@ Clone the repository to your local machine using the following command:
 
 ```bash
 git clone https://github.com/thismajid/everbuy.git
-cd streamlining-image-upload-cloudinary
+cd everbuy
 npm install
 npx prisma migrate dev
 npm start |or| npm run start:dev
